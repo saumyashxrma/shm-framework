@@ -1,6 +1,6 @@
 # SHM framework v1.0.0
 
-![tests](https://github.com/REPLACE-WITH-USERNAME/shm-framework/actions/workflows/tests.yml/badge.svg)
+![tests](https://github.com/saumyashxrma/shm-framework/actions/workflows/tests.yml/badge.svg)
 
 Decision-support software prototype for structural health monitoring (SHM), developed as Capstone Project-1 at
 KL University (team Y23-HTE-PROJECT-62: Saumya Sharma, Abhigyan Sharma, Madhuhan Shekhar; guide
