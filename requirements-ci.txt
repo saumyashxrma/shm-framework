@@ -1,0 +1,7 @@
+# Minimal environment for the automated test suite (no TensorFlow, no Gradio).
+numpy>=1.26,<2.3
+scipy>=1.11
+pandas>=2.1
+scikit-learn==1.6.1
+matplotlib>=3.8
+pytest>=8

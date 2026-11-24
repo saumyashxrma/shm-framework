@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "SHM framework: leakage-free guided-wave damage assessment and fatigue-crack prognosis"
+version: 1.0.0
+date-released: 2026-11-30
+license: MIT
+authors:
+  - family-names: Sharma
+    given-names: Saumya
+  - family-names: Sharma
+    given-names: Abhigyan
+  - family-names: Shekhar
+    given-names: Madhuhan
+repository-code: "https://github.com/REPLACE-WITH-USERNAME/shm-framework"

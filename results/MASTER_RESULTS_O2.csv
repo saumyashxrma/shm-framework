@@ -1,0 +1,49 @@
+objective,protocol,metric,value
+O2,"Diagnosis, nested LOSO T1–T6, 5 seeds",MAE mean (mm),1.0469078779948964
+O2,same,MAE SD (mm),0.03577692388483562
+O2,"Random-feature control, 5 seeds",MAE mean (mm),1.5145627693391321
+O2,Cycle-only baseline,MAE (mm),1.2868457251130498
+O2,Fusion PCA-ridge (rejected),MAE (mm),1.7446201120763793
+O2,Reduction vs cycle-only,%,18.645424423123824
+O2,Reduction vs random control,%,30.877220859475727
+O2,"Conformal (deployment-matched, Q-CONF)",q_d (mm),3.0831593004719973
+O2,"Conformal (deployment-matched, Q-CONF)",q_f (mm),4.7323831775409335
+O2,"Conformal (deployment-matched, Q-CONF)",coverage T7+T8,0.8888888888888888
+O2,Challenge,RMSE T7 (mm),3.6063275958257304
+O2,Challenge,RMSE T8 (mm),2.011103829634444
+O2,Prognosis true history T1–T6,linear GP RMSE (mm),1.1526870027761598
+O2,Prognosis true history T1–T6,similarity RMSE (mm),2.0915120850841835
+O2,"Inspection rule, limit 1.0 mm",flagged critical: estimate / upper bound,0.926 / 1.000
+O2,"Inspection rule, limit 1.0 mm",early inspections: estimate / upper bound,0.222 / 1.000
+O2,"Inspection rule, limit 1.5 mm",flagged critical: estimate / upper bound,0.889 / 1.000
+O2,"Inspection rule, limit 1.5 mm",early inspections: estimate / upper bound,0.222 / 1.000
+O2,"Inspection rule, limit 2.0 mm",flagged critical: estimate / upper bound,0.923 / 1.000
+O2,"Inspection rule, limit 2.0 mm",early inspections: estimate / upper bound,0.100 / 1.000
+O2,"Inspection rule, limit 2.5 mm",flagged critical: estimate / upper bound,0.826 / 1.000
+O2,"Inspection rule, limit 2.5 mm",early inspections: estimate / upper bound,0.231 / 1.000
+O2,"Inspection rule, limit 3.0 mm",flagged critical: estimate / upper bound,0.700 / 1.000
+O2,"Inspection rule, limit 3.0 mm",early inspections: estimate / upper bound,0.125 / 1.000
+O2,"Inspection rule, limit 3.5 mm",flagged critical: estimate / upper bound,0.706 / 1.000
+O2,"Inspection rule, limit 3.5 mm",early inspections: estimate / upper bound,0.158 / 0.789
+O2,"Inspection rule, limit 4.0 mm",flagged critical: estimate / upper bound,0.467 / 1.000
+O2,"Inspection rule, limit 4.0 mm",early inspections: estimate / upper bound,0.095 / 0.571
+O2,"Inspection rule, limit 4.5 mm",flagged critical: estimate / upper bound,0.462 / 1.000
+O2,"Inspection rule, limit 4.5 mm",early inspections: estimate / upper bound,0.043 / 0.565
+O2,"Inspection rule, limit 5.0 mm",flagged critical: estimate / upper bound,0.143 / 1.000
+O2,"Inspection rule, limit 5.0 mm",early inspections: estimate / upper bound,0.103 / 0.655
+O2,"Inspection rule, limit 5.5 mm",flagged critical: estimate / upper bound,0.000 / 1.000
+O2,"Inspection rule, limit 5.5 mm",early inspections: estimate / upper bound,0.032 / 0.581
+O2,"Inspection rule, limit 6.0 mm",flagged critical: estimate / upper bound,0.000 / 1.000
+O2,"Inspection rule, limit 6.0 mm",early inspections: estimate / upper bound,0.000 / 0.406
+O2,"Inspection rule, limit 6.5 mm",flagged critical: estimate / upper bound,0.000 / 0.750
+O2,"Inspection rule, limit 6.5 mm",early inspections: estimate / upper bound,0.000 / 0.375
+O2,"Inspection rule, limit 7.0 mm",flagged critical: estimate / upper bound,0.000 / 1.000
+O2,"Inspection rule, limit 7.0 mm",early inspections: estimate / upper bound,0.000 / 0.206
+O2,"Inspection rule, limit 7.5 mm",flagged critical: estimate / upper bound,nan / nan
+O2,"Inspection rule, limit 7.5 mm",early inspections: estimate / upper bound,0.000 / 0.194
+O2,"Inspection rule, limit 8.0 mm",flagged critical: estimate / upper bound,nan / nan
+O2,"Inspection rule, limit 8.0 mm",early inspections: estimate / upper bound,0.000 / 0.111
+O2,"Conformal (deployment-matched, Q-CONF)",coverage T7+T8 diagnosis,0.8888888888888888
+O2,"Conformal (deployment-matched, Q-CONF)",coverage T7+T8 forecast,0.8888888888888888
+O2,"Conformal (superseded, true-history calibration)",q_f (mm),2.5788420043892692
+O2,Prognosis true history T1–T6,Paris law RMSE (mm),2.9917184841731426
