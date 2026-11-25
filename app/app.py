@@ -22,14 +22,16 @@ from shm import config as C             # noqa: E402
 from shm import data as io              # noqa: E402
 from shm import model_o1                # noqa: E402
 from shm.envcomp import EnvCompensator  # noqa: E402
-from shm.pipeline import O2Pipeline, decide, monitor_stream, synthetic_specimens  # noqa: E402
+from shm.pipeline import O2Pipeline, decide, monitor_stream, synthetic_specimens, synthetic_o1_recordings, synthetic_o1_stream_full  # noqa: E402
 
 plt.rcParams.update({"font.family": "serif", "font.size": 9, "axes.spines.top": False, "axes.spines.right": False})
 BLUE, LIGHT, ORANGE, GREEN = "#2F5597", "#9DC3E6", "#C55A11", "#548235"
 
 # ---------------------------------------------------------------- data loaded once at start-up
-REC = io.load_o1_recordings() if io.has(io.O1_RECORDINGS) else None
-STREAM = io.load_o1_stream() if io.has(io.O1_STREAM) else None
+SYN_REC, SYN_STREAM = not io.has(io.O1_RECORDINGS), not io.has(io.O1_STREAM)
+REC = synthetic_o1_recordings() if SYN_REC else io.load_o1_recordings()
+STREAM = synthetic_o1_stream_full() if SYN_STREAM else io.load_o1_stream()
+SYN_NOTE = "**SYNTHETIC demo data** – the exported O1 recordings/models are not installed (see README, Phase 2)."
 if io.has(io.O2_SPECIMENS):
     O2 = O2Pipeline(io.load_o2_specimens())
     O2_SRC = "NASA / PHM 2019 features exported from the Colab run"
@@ -64,14 +66,14 @@ def o1_single(choice, fold):
     ax.set_yticks(2.2 * np.arange(C.N_CH))
     ax.set_yticklabels([f"path {c + 1}" for c in range(C.N_CH)])
     ax.set_xlabel("Time (µs)")
-    ax.set_title(f"Preprocessed recording #{i} (band-pass 50–240 kHz, peak-normalised)", fontsize=9)
+    ax.set_title(f"{'SYNTHETIC – ' if SYN_REC else ''}Preprocessed recording #{i} (band-pass 50–240 kHz, peak-normalised)", fontsize=9)
     plt.tight_layout()
     if model_o1.available(fold):
         lv = float(_ensemble(fold).predict(w[None], env[None])[0])
         src = f"computed now with the fold-{fold} 3-seed ensemble"
-    elif "ref_level_A" in REC and fold == "A":
-        lv = float(REC["ref_level_A"][i])
-        src = "fold-A level computed in the Kaggle run (TensorFlow/models not loaded here)"
+    elif f"ref_level_{fold}" in REC:
+        lv = float(REC[f"ref_level_{fold}"][i])
+        src = (SYN_NOTE if SYN_REC else f"fold-{fold} level computed in the Kaggle run (TensorFlow/models not loaded here)")
     else:
         return fig, "Models for this fold are not available. Put the exported `.keras` files in `models/`."
     d = decide([lv])
@@ -110,7 +112,7 @@ def o1_stream(fold, position):
     ax.set_xlabel("Recording (time order)")
     ax.set_ylabel("Damage level")
     ax.legend(loc="upper left", fontsize=7, frameon=False, ncol=4)
-    ax.set_title(f"Fold {fold} monitoring stream up to recording {pos} ({month[pos]})", fontsize=9)
+    ax.set_title(f"{'SYNTHETIC – ' if SYN_STREAM else ''}Fold {fold} monitoring stream up to recording {pos} ({month[pos]})", fontsize=9)
     plt.tight_layout()
     d = r.tracked
     md = (f"### At recording {pos} ({month[pos]}): **{C.SEV_NAMES[d.severity[-1]]}**, mechanism "
@@ -121,7 +123,8 @@ def o1_stream(fold, position):
           f"- Environment-compensated detector: **{'damage suspected' if flag else 'no damage indication'}** "
           f"at {env[pos, 0]:.1f} °C / {env[pos, 1]:.0f} % RH (demo fit on all healthy months)\n"
           f"- Tracking starts at the first permanent damage (recording {start}); in operation this comes from a "
-          f"confirmed alarm or an inspection.")
+          f"confirmed alarm or an inspection."
+          + (f"\n- {SYN_NOTE}" if SYN_STREAM else ""))
     return fig, md
 
 

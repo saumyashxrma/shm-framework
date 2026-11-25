@@ -139,6 +139,37 @@ def synthetic_stream(seed: int = 0):
     return level, tags, month
 
 
+def synthetic_o1_recordings(seed: int = 0) -> dict:
+    """SYNTHETIC stand-in for data/sample/o1_recordings.npz (same keys). For demonstrating the interface only."""
+    rng = np.random.default_rng(seed)
+    tags = np.repeat(np.arange(14), 2)
+    t = np.arange(C.N_SAMP) / (C.FS_UTAH / C.STRIDE)
+    waves = np.zeros((len(tags), C.N_SAMP, C.N_CH), np.float32)
+    for i, tag in enumerate(tags):
+        for ch in range(C.N_CH):
+            t0 = 1e-4 + 2e-5 * ch
+            burst = np.exp(-((t - t0) / 3e-5) ** 2) * np.sin(2 * np.pi * 100e3 * (t - t0))
+            scat = 0.04 * tag * np.exp(-((t - t0 - 2e-4) / 6e-5) ** 2) * np.sin(2 * np.pi * 120e3 * t)
+            w = burst + scat + 0.02 * rng.standard_normal(len(t))
+            waves[i, :, ch] = w / np.abs(w).max()
+    env = np.c_[rng.uniform(-5, 35, len(tags)), rng.uniform(20, 90, len(tags))]
+    out = {"waves": waves, "env": env, "tags": tags, "month": np.array(["synthetic"] * len(tags))}
+    for f, hid in C.TAG_FOLDS.items():                  # unseen states read low, as in the real folds
+        out[f"ref_level_{f}"] = tags + rng.normal(0, 0.4, len(tags)) - np.isin(tags, hid) * 1.2
+    return out
+
+
+def synthetic_o1_stream_full(seed: int = 0) -> dict:
+    """SYNTHETIC stand-in for data/sample/o1_stream.npz (same keys). For demonstrating the interface only."""
+    rng = np.random.default_rng(seed)
+    level, tags, month = synthetic_stream(seed)
+    env = np.c_[15 + 10 * np.sin(np.linspace(0, 6, len(tags))) + rng.normal(0, 1, len(tags)), rng.uniform(30, 90, len(tags))]
+    out = {"tags": tags, "month": month, "env": env}
+    for f, hid in C.TAG_FOLDS.items():
+        out[f"level_{f}"] = tags + rng.normal(0, 0.5, len(tags)) - np.isin(tags, hid) * 1.2 + 0.03 * (env[:, 0] - 15)
+    return out
+
+
 # ------------------------------------------------------------------ CLI ----------------------------------------------
 def _demo() -> None:
     print("SHM framework v1.0.0 - console demonstration\n")
